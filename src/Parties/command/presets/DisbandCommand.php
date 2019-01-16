@@ -15,7 +15,7 @@ class DisbandCommand extends PartyCommand {
      * DisbandCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["disband"], "Usage: /party disband", "Disbands the party");
+        parent::__construct(["disband"], "/party disband", "Disbands the party");
     }
 
     /**

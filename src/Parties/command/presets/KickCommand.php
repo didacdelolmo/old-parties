@@ -15,7 +15,7 @@ class KickCommand extends PartyCommand {
      * KickCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["kick"], "Usage: /party kick (player)", "Kicks the player from your party");
+        parent::__construct(["kick"], "/party kick (player)", "Kicks the player from your party");
     }
 
     /**
@@ -24,7 +24,11 @@ class KickCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage($this->getUsageMessageId());
+            $session->sendMessage("Usage: " .$this->getUsageMessageId());
+            return;
+        }
+        if(!$session->hasParty()) {
+            $session->sendMissingPartyMessage();
             return;
         }
         $player = $session->getManager()->getPlugin()->getServer()->getPlayer($args[0]);
@@ -33,11 +37,11 @@ class KickCommand extends PartyCommand {
             return;
         }
         $playerSession = $session->getManager()->getSession($player);
-        if(!$session->hasParty()) {
-            $session->sendMissingPartyMessage();
+        $party = $session->getParty();
+        if($playerSession->getUsername() == $session->getUsername()) {
+            $session->sendMessage(TextFormat::RED . "You can't kick yourself!");
             return;
         }
-        $party = $session->getParty();
         if(!$session->isLeader()) {
             $session->sendLeaderMessage();
             return;

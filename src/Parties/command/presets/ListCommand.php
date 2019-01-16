@@ -15,7 +15,7 @@ class ListCommand extends PartyCommand {
      * ListCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["list"], "Usage: /party list", "Lists the members of your party");
+        parent::__construct(["list"], "/party list", "Lists the members of your party");
     }
 
     /**

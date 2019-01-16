@@ -99,8 +99,9 @@ class PartyCommandMap extends Command {
         if(isset($args[0]) and $this->getCommand($args[0]) != null) {
             $this->getCommand(array_shift($args))->onCommand($session, $args);
         } else {
+            $sender->sendMessage(TextFormat::GOLD . "Party Commands:");
             foreach($this->commands as $key => $command) {
-                $sender->sendMessage(TextFormat::GREEN . $command->getUsageMessageId() . ": " . $command->getDescriptionMessageId());
+                $sender->sendMessage(TextFormat::BOLD . TextFormat::DARK_GRAY . "» " . TextFormat::RESET . TextFormat::YELLOW . $command->getUsageMessageId() . TextFormat::DARK_GRAY . " - " . TextFormat::AQUA .  $command->getDescriptionMessageId());
             }
         }
     }

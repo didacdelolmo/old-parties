@@ -34,6 +34,7 @@ class Party {
         $this->manager = $manager;
         $this->identifier = $identifier;
         $this->leader = $leader;
+        $this->addMember($leader);
     }
 
     /**
@@ -111,6 +112,7 @@ class Party {
      */
     public function addMember(Session $member): void {
         $this->members[] = $member;
+        $member->setParty($this);
     }
 
     /**
@@ -118,6 +120,7 @@ class Party {
      */
     public function removeMember(Session $member): void {
         unset($this->members[array_search($member, $this->members)]);
+        $member->setParty(null);
     }
 
     /**

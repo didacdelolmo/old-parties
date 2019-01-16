@@ -15,7 +15,7 @@ class JoinCommand extends PartyCommand {
      * JoinCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["join"], "Usage: /party join (player)", "Joins the player party if it's unlocked");
+        parent::__construct(["join"], "/party join (player)", "Joins the player party if it's unlocked");
     }
 
     /**
@@ -24,7 +24,7 @@ class JoinCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage($this->getUsageMessageId());
+            $session->sendMessage("Usage: " .$this->getUsageMessageId());
             return;
         }
         $player = $session->getManager()->getPlugin()->getServer()->getPlayer($args[0]);
@@ -40,6 +40,10 @@ class JoinCommand extends PartyCommand {
         $party = $playerSession->getParty();
         if($party->isLocked()) {
             $session->sendMessage(TextFormat::RED . "This party is locked!");
+            return;
+        }
+        if($session->hasParty()) {
+            $session->sendAlreadyPartyMessage();
             return;
         }
         $party->addMember($session);

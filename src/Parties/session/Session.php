@@ -162,6 +162,10 @@ class Session {
         $this->sendMessage(TextFormat::RED . "You must provide a valid player!");
     }
 
+    public function sendAlreadyPartyMessage(): void {
+        $this->sendMessage(TextFormat::RED . "You already are in a party!");
+    }
+
     public function sendMissingPartyMessage(): void {
         $this->sendMessage(TextFormat::RED . "You must be in a party to do that!");
     }

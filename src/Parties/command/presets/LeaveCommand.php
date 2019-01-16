@@ -15,7 +15,7 @@ class LeaveCommand extends PartyCommand {
      * LeaveCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["leave"], "Usage: /party leave", "Leaves the current party");
+        parent::__construct(["leave"], "/party leave", "Leaves the current party");
     }
 
     /**

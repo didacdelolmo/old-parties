@@ -15,7 +15,7 @@ class ChatCommand extends PartyCommand {
      * ChatCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["chat", "c"], "Usage: /party chat (message)", "Sends a message to the party members");
+        parent::__construct(["chat", "c"], "/party chat (message)", "Sends a message to the party members");
     }
 
     /**
@@ -24,7 +24,7 @@ class ChatCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage($this->getUsageMessageId());
+            $session->sendMessage("Usage: " . $this->getUsageMessageId());
             return;
         }
         if(!$session->hasParty()) {

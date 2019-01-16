@@ -15,7 +15,7 @@ class CreateCommand extends PartyCommand {
      * CreateCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["create"], "Usage: /party create", "Creates a party");
+        parent::__construct(["create"], "/party create", "Creates a party");
     }
 
     /**
@@ -24,7 +24,7 @@ class CreateCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if($session->hasParty()) {
-            $session->sendMessage(TextFormat::RED . "You already have a party!");
+            $session->sendAlreadyPartyMessage();
             return;
         }
         $session->getManager()->getPlugin()->getPartyManager()->createParty($session);

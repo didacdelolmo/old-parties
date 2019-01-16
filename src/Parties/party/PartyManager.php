@@ -43,10 +43,8 @@ class PartyManager {
      */
     public function createParty(Session $leader): void {
         if(!isset($this->parties[$identifier = $leader->getUsername()])) {
-            $party = new Party($this, $identifier, $leader);
             $leader->clearInvitations();
-            $leader->setParty($party);
-            $this->parties[$identifier] = $party;
+            $this->parties[$identifier] = new Party($this, $identifier, $leader);
         }
     }
 

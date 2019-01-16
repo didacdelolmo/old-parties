@@ -15,7 +15,7 @@ class AcceptCommand extends PartyCommand {
      * AcceptCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["accept"], "Usage: /party accept (player)", "Accepts a party invite from the player");
+        parent::__construct(["accept"], "/party accept (player)", "Accepts a party invite from the player");
     }
 
     /**
@@ -33,6 +33,10 @@ class AcceptCommand extends PartyCommand {
         }
         if($player == null) {
             $session->sendValidPlayerMessage();
+            return;
+        }
+        if($session->hasParty()) {
+            $session->sendAlreadyPartyMessage();
             return;
         }
         $playerSession = $session->getManager()->getSession($player);

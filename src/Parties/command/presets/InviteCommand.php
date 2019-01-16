@@ -15,7 +15,7 @@ class InviteCommand extends PartyCommand {
      * InviteCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["invite"], "Usage: /party invite (player)", "Invites the player to your party, creating one if you haven't done it");
+        parent::__construct(["invite"], "/party invite (player)", "Invites the player to your party, creating one if you haven't done it");
     }
 
     /**
@@ -24,7 +24,7 @@ class InviteCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage($this->getUsageMessageId());
+            $session->sendMessage("Usage: " .$this->getUsageMessageId());
             return;
         }
         $plugin = $session->getManager()->getPlugin();
@@ -34,15 +34,19 @@ class InviteCommand extends PartyCommand {
             return;
         }
         $playerSession = $session->getManager()->getSession($player);
+        if($playerSession->getUsername() == $session->getUsername()) {
+            $session->sendMessage(TextFormat::RED . "You can't invite yourself!");
+            return;
+        }
+        if($playerSession->hasParty()) {
+            $session->sendMessage(TextFormat::RED . "This player is already in a party!");
+            return;
+        }
         if(!$session->hasParty()) {
             $plugin->getPartyManager()->createParty($session);
         }
         if(!$session->isLeader()) {
             $session->sendLeaderMessage();
-            return;
-        }
-        if($playerSession->hasParty()) {
-            $session->sendMessage(TextFormat::RED . "This player is already in a party!");
             return;
         }
         $username = $session->getUsername();

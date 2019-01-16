@@ -15,7 +15,7 @@ class LockCommand extends PartyCommand {
      * LockCommand constructor.
      */
     public function __construct() {
-        parent::__construct(["lock"], "Usage: /party lock/unlock", "Locks/unlocks the party to make players be able to join it");
+        parent::__construct(["lock"], "/party lock/unlock", "Locks/unlocks the party to make players be able to join it");
     }
 
     /**

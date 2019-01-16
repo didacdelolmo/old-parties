@@ -24,7 +24,11 @@ class PromoteCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage($this->getUsageMessageId());
+            $session->sendMessage("Usage: " .$this->getUsageMessageId());
+            return;
+        }
+        if(!$session->hasParty()) {
+            $session->sendMissingPartyMessage();
             return;
         }
         $player = $session->getManager()->getPlugin()->getServer()->getPlayer($args[0]);
@@ -33,8 +37,9 @@ class PromoteCommand extends PartyCommand {
             return;
         }
         $playerSession = $session->getManager()->getSession($player);
-        if(!$session->hasParty()) {
-            $session->sendMissingPartyMessage();
+        $party = $session->getParty();
+        if($playerSession->getUsername() == $session->getUsername()) {
+            $session->sendMessage(TextFormat::RED . "You can't promote yourself!");
             return;
         }
         if(!$session->isLeader()) {
@@ -46,7 +51,6 @@ class PromoteCommand extends PartyCommand {
             return;
         }
         $username = $playerSession->getUsername();
-        $party = $session->getParty();
         $party->setLeader($playerSession);
         $session->sendMessage(TextFormat::AQUA . "You have promoted $username to party leader!");
         $party->sendMessage(TextFormat::GREEN . "$username is now the party leader!");
