@@ -6,23 +6,16 @@ namespace Parties\command\presets;
 
 
 use Parties\command\PartyCommand;
-use Parties\command\PartyCommandMap;
-use Parties\Parties;
 use Parties\session\Session;
 use pocketmine\utils\TextFormat;
 
 class InviteCommand extends PartyCommand {
 
-    /** @var Parties */
-    private $plugin;
-
     /**
      * InviteCommand constructor.
-     * @param PartyCommandMap $map
      */
-    public function __construct(PartyCommandMap $map) {
-        $this->plugin = $map->getPlugin();
-        parent::__construct(["invite"], "/party invite (player)", "Invites the player to your party, creating one if you haven't done it");
+    public function __construct() {
+        parent::__construct(["invite"], "Usage: /party invite (player)", "Invites the player to your party, creating one if you haven't done it");
     }
 
     /**
@@ -31,20 +24,21 @@ class InviteCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->getOwner()->sendMessage($this->getUsageMessageId());
+            $session->sendMessage($this->getUsageMessageId());
             return;
         }
-        $player = $this->plugin->getServer()->getPlayer($args[0]);
+        $plugin = $session->getManager()->getPlugin();
+        $player = $plugin->getServer()->getPlayer($args[0]);
         if($player == null) {
-            $session->sendMessage(TextFormat::RED . "You must provide a valid player!");
+            $session->sendValidPlayerMessage();
             return;
         }
         $playerSession = $session->getManager()->getSession($player);
         if(!$session->hasParty()) {
-            $this->plugin->getPartyManager()->createParty($session);
+            $plugin->getPartyManager()->createParty($session);
         }
         if(!$session->isLeader()) {
-            $session->sendMessage(TextFormat::RED . "You must be leader of the party to do that!");
+            $session->sendLeaderMessage();
             return;
         }
         if($playerSession->hasParty()) {

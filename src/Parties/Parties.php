@@ -12,11 +12,18 @@ use pocketmine\utils\TextFormat;
 
 class Parties extends PluginBase {
 
+    /** @var Parties */
+    private static $instance;
+
     /** @var PartyManager */
     private $partyManager;
 
     /** @var SessionManager */
     private $sessionManager;
+
+    public function onLoad() {
+        self::$instance = $this;
+    }
 
     public function onEnable() {
         $this->partyManager = new PartyManager($this);
@@ -28,6 +35,13 @@ class Parties extends PluginBase {
     
     public function onDisable() {
         $this->getLogger()->info(TextFormat::GOLD . "Parties has been disabled!");
+    }
+
+    /**
+     * @return Parties
+     */
+    public static function getInstance() {
+        return self::$instance;
     }
 
     /**

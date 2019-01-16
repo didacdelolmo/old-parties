@@ -5,6 +5,16 @@ declare(strict_types=1);
 namespace Parties\command;
 
 
+use Parties\command\presets\AcceptCommand;
+use Parties\command\presets\ChatCommand;
+use Parties\command\presets\DisbandCommand;
+use Parties\command\presets\InviteCommand;
+use Parties\command\presets\JoinCommand;
+use Parties\command\presets\KickCommand;
+use Parties\command\presets\LeaveCommand;
+use Parties\command\presets\ListCommand;
+use Parties\command\presets\LockCommand;
+use Parties\command\presets\PromoteCommand;
 use Parties\Parties;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -21,10 +31,24 @@ class PartyCommandMap extends Command implements PluginIdentifiableCommand {
     /** @var PartyCommand[] */
     private $commands = [];
 
+    /**
+     * PartyCommandMap constructor.
+     * @param Parties $plugin
+     */
     public function __construct(Parties $plugin) {
         $this->plugin = $plugin;
-        // register commands
-        parent::__construct("party", "Manage party commands", "Usage: /party", ["p"]);
+        $this->registerCommand(new AcceptCommand());
+        $this->registerCommand(new ChatCommand());
+        $this->registerCommand(new DisbandCommand());
+        $this->registerCommand(new InviteCommand());
+        $this->registerCommand(new JoinCommand());
+        $this->registerCommand(new KickCommand());
+        $this->registerCommand(new LeaveCommand());
+        $this->registerCommand(new ListCommand());
+        $this->registerCommand(new LockCommand());
+        $this->registerCommand(new PromoteCommand());
+        parent::__construct("party", "See party commands", "Usage: /party", ["p"]);
+        $plugin->getServer()->getCommandMap()->register("party", $this);
     }
 
     /**

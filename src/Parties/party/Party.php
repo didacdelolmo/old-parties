@@ -29,7 +29,6 @@ class Party {
      * @param PartyManager $manager
      * @param string $identifier
      * @param Session $leader
-     * @param array $members
      */
     public function __construct(PartyManager $manager, string $identifier, Session $leader) {
         $this->manager = $manager;
@@ -73,6 +72,13 @@ class Party {
     }
 
     /**
+     * @return bool
+     */
+    public function isLocked(): bool {
+        return $this->locked == true;
+    }
+
+    /**
      * @param string $identifier
      */
     public function setIdentifier(string $identifier): void {
@@ -112,6 +118,16 @@ class Party {
      */
     public function removeMember(Session $member): void {
         unset($this->members[array_search($member, $this->members)]);
+    }
+
+    /**
+     * @param string $message
+     */
+    public function sendMessage(string $message): void {
+        /** @var Session $member */
+        foreach($this->members as $member) {
+            $member->sendMessage($message);
+        }
     }
 
 }

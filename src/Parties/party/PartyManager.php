@@ -43,6 +43,7 @@ class PartyManager {
      */
     public function createParty(Session $leader): void {
         if(!isset($this->parties[$identifier = $leader->getUsername()])) {
+            $leader->clearInvitations();
             $this->parties[$identifier] = new Party($this, $identifier, $leader);
         }
     }
@@ -51,8 +52,12 @@ class PartyManager {
      * @param string $identifier
      */
     public function deleteParty(string $identifier): void {
-        if(isset($this->parties[$identifier])) {
-            unset($this->parties[$identifier]);
+        $party = $this->parties[$identifier];
+        if(isset($party)) {
+            foreach($party->getMembers() as $member) {
+                $member->setParty(null);
+            }
+            unset($party);
         }
     }
 

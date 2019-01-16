@@ -60,8 +60,10 @@ class SessionManager {
      * @param Player $player
      */
     public function closeSession(Player $player): void {
-        if(isset($this->sessions[$username = $player->getName()])) {
-             unset($this->sessions[$username]);
+        $session = $this->sessions[$player->getName()];
+        if(isset($session)) {
+            $session->clearInvitations();
+            unset($session);
         }
     }
 

@@ -62,7 +62,6 @@ abstract class PartyCommand {
         return $this->descriptionMessageId;
     }
 
-
     /**
      * @param Session $session
      * @param array $args
