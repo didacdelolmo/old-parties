@@ -7,6 +7,7 @@ namespace Parties\command;
 
 use Parties\command\presets\AcceptCommand;
 use Parties\command\presets\ChatCommand;
+use Parties\command\presets\CreateCommand;
 use Parties\command\presets\DisbandCommand;
 use Parties\command\presets\InviteCommand;
 use Parties\command\presets\JoinCommand;
@@ -39,6 +40,7 @@ class PartyCommandMap extends Command implements PluginIdentifiableCommand {
         $this->plugin = $plugin;
         $this->registerCommand(new AcceptCommand());
         $this->registerCommand(new ChatCommand());
+        $this->registerCommand(new CreateCommand());
         $this->registerCommand(new DisbandCommand());
         $this->registerCommand(new InviteCommand());
         $this->registerCommand(new JoinCommand());
