@@ -52,12 +52,11 @@ class PartyManager {
      * @param string $identifier
      */
     public function deleteParty(string $identifier): void {
-        $party = $this->parties[$identifier];
-        if(isset($party)) {
-            foreach($party->getMembers() as $member) {
+        if(isset($this->parties[$identifier])) {
+            foreach($this->parties[$identifier]->getMembers() as $member) {
                 $member->setParty(null);
             }
-            unset($party);
+            unset($this->parties[$identifier]);
         }
     }
 
