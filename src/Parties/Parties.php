@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Parties;
 
 
+use Parties\command\PartyCommandMap;
 use Parties\party\PartyManager;
 use Parties\session\Session;
 use Parties\session\SessionManager;
@@ -17,6 +18,9 @@ class Parties extends PluginBase {
     /** @var Parties */
     private static $instance;
 
+    /** @var PartyCommandMap */
+    private $commandMap;
+
     /** @var PartyManager */
     private $partyManager;
 
@@ -28,6 +32,7 @@ class Parties extends PluginBase {
     }
 
     public function onEnable() {
+        $this->commandMap = new PartyCommandMap($this);
         $this->partyManager = new PartyManager($this);
         $this->sessionManager = new SessionManager($this);
         $this->getServer()->getPluginManager()->registerEvents(new PartiesListener($this), $this);
@@ -44,6 +49,13 @@ class Parties extends PluginBase {
      */
     public static function getInstance() {
         return self::$instance;
+    }
+
+    /**
+     * @return PartyCommandMap
+     */
+    public function getCommandMap(): PartyCommandMap {
+        return $this->commandMap;
     }
 
     /**

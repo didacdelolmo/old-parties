@@ -19,12 +19,10 @@ use Parties\command\presets\PromoteCommand;
 use Parties\Parties;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 
-class PartyCommandMap extends Command implements PluginIdentifiableCommand {
+class PartyCommandMap extends Command {
 
     /** @var Parties */
     private $plugin;
@@ -54,9 +52,9 @@ class PartyCommandMap extends Command implements PluginIdentifiableCommand {
     }
 
     /**
-     * @return Parties|Plugin
+     * @return Parties
      */
-    public function getPlugin(): Plugin {
+    public function getPlugin(): Parties {
         return $this->plugin;
     }
 

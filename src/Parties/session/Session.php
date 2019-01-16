@@ -145,7 +145,7 @@ class Session {
             if($session->hasInvitationFrom($this)) {
                 $session->removeInvitationFrom($this);
             }
-            if($session->getLastInvitation()->getUsername() == $this) {
+            if($session->hasLastInvitation() and $session->getLastInvitation()->getUsername() == $this->getUsername()) {
                 $session->setLastInvitation(null);
             }
         }
