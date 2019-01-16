@@ -19,7 +19,7 @@ class Party {
     private $leader;
 
     /** @var Session[] */
-    private $members;
+    private $members = [];
 
     /** @var bool */
     private $locked = true;
@@ -31,11 +31,10 @@ class Party {
      * @param Session $leader
      * @param array $members
      */
-    public function __construct(PartyManager $manager, string $identifier, Session $leader, array $members) {
+    public function __construct(PartyManager $manager, string $identifier, Session $leader) {
         $this->manager = $manager;
         $this->identifier = $identifier;
         $this->leader = $leader;
-        $this->members[] = $members;
     }
 
     /**

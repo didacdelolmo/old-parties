@@ -92,6 +92,13 @@ class Session {
     }
 
     /**
+     * @return bool
+     */
+    public function isLeader(): bool {
+        return $this->hasParty() and $this->party->getLeader();
+    }
+
+    /**
      * @param Session $session
      */
     public function addInvitationFrom(Session $session): void {
@@ -104,6 +111,13 @@ class Session {
      */
     public function removeInvitationFrom(Session $session): void {
         unset($this->invitations[array_search($session, $this->invitations)]);
+    }
+
+    /**
+     * @param string $message
+     */
+    public function sendMessage(string $message): void {
+        $this->owner->sendMessage($message);
     }
 
 }

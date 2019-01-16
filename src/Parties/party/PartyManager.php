@@ -40,11 +40,10 @@ class PartyManager {
 
     /**
      * @param Session $leader
-     * @param array $members
      */
-    public function createParty(Session $leader, array $members): void {
+    public function createParty(Session $leader): void {
         if(!isset($this->parties[$identifier = $leader->getUsername()])) {
-            $this->parties[$identifier] = new Party($this, $identifier, $leader, $members);
+            $this->parties[$identifier] = new Party($this, $identifier, $leader);
         }
     }
 
