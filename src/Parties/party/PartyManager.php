@@ -39,20 +39,32 @@ class PartyManager {
     }
 
     /**
-     * @param Session $leader
+     * @param Session $session
      */
-    public function createParty(Session $leader): void {
-        if(!isset($this->parties[$identifier = $leader->getUsername()])) {
-            $leader->clearInvitations();
-            $this->parties[$identifier] = new Party($this, $identifier, $leader);
+    public function renameParty(Session $session): void {
+        if(isset($this->parties[$identifier = $session->getParty()->getIdentifier()])) {
+            $party = $this->parties[$identifier];
+            $party->setIdentifier($username = $session->getUsername());
+            unset($this->parties[$identifier]);
+            $this->parties[$username] = $party;
         }
     }
 
     /**
-     * @param string $identifier
+     * @param Session $session
      */
-    public function deleteParty(string $identifier): void {
-        if(isset($this->parties[$identifier])) {
+    public function createParty(Session $session): void {
+        if(!isset($this->parties[$identifier = $session->getUsername()])) {
+            $session->clearInvitations();
+            $this->parties[$identifier] = new Party($this, $identifier, $session);
+        }
+    }
+
+    /**
+     * @param Session $session
+     */
+    public function deleteParty(Session $session): void {
+        if(isset($this->parties[$identifier = $session->getUsername()])) {
             foreach($this->parties[$identifier]->getMembers() as $member) {
                 $member->setParty(null);
             }

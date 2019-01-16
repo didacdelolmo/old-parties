@@ -43,7 +43,7 @@ class InviteCommand extends PartyCommand {
             return;
         }
         if(!$session->hasParty()) {
-            $plugin->getPartyManager()->createParty($session);
+            $plugin->getServer()->dispatchCommand($session->getOwner(), "party create");
         }
         if(!$session->isLeader()) {
             $session->sendLeaderMessage();

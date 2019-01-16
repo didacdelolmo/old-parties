@@ -48,7 +48,7 @@ class JoinCommand extends PartyCommand {
         }
         $party->addMember($session);
         $party->sendMessage(TextFormat::GREEN . $session->getUsername() . " has joined the party!");
-        $session->sendMessage(TextFormat::GREEN . "You have joined {$playerSession->getUsername()}'s party!'");
+        $session->sendMessage(TextFormat::GREEN . "You have joined {$playerSession->getUsername()}'s party!");
     }
 
 }

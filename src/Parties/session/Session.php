@@ -20,7 +20,7 @@ class Session {
     /** @var null|Party */
     private $party = null;
 
-    /** @var string[] */
+    /** @var Session[] */
     private $invitations = [];
 
     /** @var null|Session */
@@ -65,7 +65,7 @@ class Session {
     }
 
     /**
-     * @return string[]
+     * @return Session[]
      */
     public function getInvitations(): array {
         return $this->invitations;
@@ -86,10 +86,10 @@ class Session {
     }
 
     /**
-     * @return bool
+     * @param null|Session $session
      */
-    public function hasParty(): bool {
-        return $this->party != null;
+    public function setLastInvitation(?Session $session): void {
+        $this->lastInvitation = $session;
     }
 
     /**
@@ -100,11 +100,18 @@ class Session {
     }
 
     /**
+     * @return bool
+     */
+    public function hasParty(): bool {
+        return $this->party != null;
+    }
+
+    /**
      * @param Session $session
      * @return bool
      */
     public function hasInvitationFrom(Session $session): bool {
-        return isset($this->invitations[$session->getUsername()]);
+        return in_array($session, $this->invitations);
     }
 
     /**
@@ -115,18 +122,11 @@ class Session {
     }
 
     /**
-     * @param null|Session $session
-     */
-    public function setLastInvitation(?Session $session): void {
-        $this->lastInvitation = $session;
-    }
-
-    /**
      * @param Session $session
      */
     public function addInvitationFrom(Session $session): void {
-        if(isset($this->invitations[$username = $session->getUsername()])) {
-            $this->invitations[] = $username;
+        if(!in_array($session, $this->invitations)) {
+            $this->invitations[] = $session;
             $this->setLastInvitation($session);
         }
     }

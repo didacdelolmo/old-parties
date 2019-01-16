@@ -26,7 +26,7 @@ class AcceptCommand extends PartyCommand {
         $player = null;
         if(!isset($args[0])) {
             if($session->hasLastInvitation()) {
-                $player = $session->getLastInvitation();
+                $player = $session->getLastInvitation()->getOwner();
             }
         } else {
             $player = $session->getManager()->getPlugin()->getServer()->getPlayer($args[0]);
@@ -48,7 +48,7 @@ class AcceptCommand extends PartyCommand {
         $party = $playerSession->getParty();
         $party->addMember($session);
         $party->sendMessage(TextFormat::GREEN . $session->getUsername() . " has joined the party!");
-        $session->sendMessage(TextFormat::GREEN . "You have joined {$playerSession->getUsername()}'s party!'");
+        $session->sendMessage(TextFormat::AQUA . "You have joined " . TextFormat::WHITE . $playerSession->getUsername() . TextFormat::AQUA . "'s party!");
         $session->removeInvitationFrom($playerSession);
     }
 

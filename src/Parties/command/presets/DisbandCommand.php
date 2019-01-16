@@ -33,7 +33,7 @@ class DisbandCommand extends PartyCommand {
             return;
         }
         $party->sendMessage(TextFormat::AQUA . "The party has been disbanded!");
-        $session->getManager()->getPlugin()->getPartyManager()->deleteParty($session->getUsername());
+        $session->getManager()->getPlugin()->getPartyManager()->deleteParty($session);
     }
 
 }

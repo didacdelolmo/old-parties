@@ -127,9 +127,16 @@ class Party {
      * @param string $message
      */
     public function sendMessage(string $message): void {
-        /** @var Session $member */
         foreach($this->members as $member) {
             $member->sendMessage($message);
+        }
+    }
+
+    public function teleportToLeader(): void {
+        foreach($this->members as $member) {
+            if(!$member->isLeader()) {
+                $member->getOwner()->teleport($this->getLeader()->getOwner()->asVector3());
+            }
         }
     }
 
