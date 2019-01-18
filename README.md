@@ -11,22 +11,44 @@ use Parties\Parties;
 $instance = Parties::getInstance();
 ```
 
+### Using events API
+
+```php
+use Parties\event\party\PartyCreateEvent;
+
+public function onCreate(PartyCreateEvent $event) {
+    $party = $event->getParty();
+}
+```
+
+You can see the full event list [here](https://github.com/Diduhless/Parties/tree/master/src/Parties/event)
+
 ### Getting the session of a player
 
 ```php
 $session = $instance->getSession(Player);
 ```
 
-### Some API guide that might be helpful for you
-
+### Getting the player instance of a session
 ```php
-// Getting the party of a session
+$player = $session->getOwner();
+```
+
+### Getting the party of a player
+```php
 if($session->hasParty()) {
     $party = $session->getParty();
 }
-
-// Making the members of a party teleport to their leader
-$party->teleportToLeader();
 ```
+
+### Making all the members of a party do something
+```php
+foreach($party->getMembers() as $member) {
+    $member->function();
+}
+```
+
+
+
 
 You can see the full API in the [Session](https://github.com/Diduhless/Parties/blob/master/src/Parties/session/Session.php) and the [Party](https://github.com/Diduhless/Parties/blob/master/src/Parties/party/Party.php) classes.
