@@ -67,7 +67,7 @@ class SessionManager {
         if(isset($this->sessions[$username = $player->getName()])) {
             $session = $this->sessions[$username];
             $session->clearInvitations();
-            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionOpenEvent($session));
+            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionCloseEvent($session));
             unset($session);
         }
     }
