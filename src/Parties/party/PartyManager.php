@@ -74,8 +74,8 @@ class PartyManager {
             foreach($this->parties[$identifier]->getMembers() as $member) {
                 $member->setParty(null);
             }
-            unset($this->parties[$identifier]);
             $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyDisbandEvent($this->parties[$identifier]));
+            unset($this->parties[$identifier]);
         }
     }
 
