@@ -35,7 +35,6 @@ class Parties extends PluginBase {
         $this->commandMap = new PartyCommandMap($this);
         $this->partyManager = new PartyManager($this);
         $this->sessionManager = new SessionManager($this);
-        $this->getServer()->getPluginManager()->registerEvents(new PartiesListener($this), $this);
         $this->getLogger()->info(TextFormat::GOLD . "Parties has been enabled!");
         $this->getLogger()->info(TextFormat::GOLD . "Remember to check out for new versions at https://github.com/Diduhless/Parties/releases");
     }
