@@ -7,9 +7,7 @@ namespace Parties;
 
 use Parties\command\PartyCommandMap;
 use Parties\party\PartyManager;
-use Parties\session\Session;
 use Parties\session\SessionManager;
-use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 
@@ -69,14 +67,6 @@ class Parties extends PluginBase {
      */
     public function getSessionManager(): SessionManager {
         return $this->sessionManager;
-    }
-
-    /**
-     * @param Player $player
-     * @return null|Session
-     */
-    public function getSession(Player $player): ?Session {
-        return $this->sessionManager->getSession($player);
     }
 
 }
