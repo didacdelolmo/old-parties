@@ -132,12 +132,4 @@ class Party {
         }
     }
 
-    public function teleportToLeader(): void {
-        foreach($this->members as $member) {
-            if(!$member->isLeader()) {
-                $member->getOwner()->teleport($this->getLeader()->getOwner()->asVector3());
-            }
-        }
-    }
-
 }

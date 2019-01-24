@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Parties\party;
 
 
+use Parties\event\party\PartyCreateEvent;
+use Parties\event\party\PartyDisbandEvent;
+use Parties\event\party\PartyPromoteEvent;
 use Parties\Parties;
 use Parties\session\Session;
 
@@ -47,6 +50,7 @@ class PartyManager {
             $party->setIdentifier($username = $session->getUsername());
             unset($this->parties[$identifier]);
             $this->parties[$username] = $party;
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyPromoteEvent($party));
         }
     }
 
@@ -55,8 +59,10 @@ class PartyManager {
      */
     public function createParty(Session $session): void {
         if(!isset($this->parties[$identifier = $session->getUsername()])) {
+            $party = new Party($this, $identifier, $session);
             $session->clearInvitations();
-            $this->parties[$identifier] = new Party($this, $identifier, $session);
+            $this->parties[$identifier] = $party;
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyCreateEvent($party));
         }
     }
 
@@ -69,6 +75,7 @@ class PartyManager {
                 $member->setParty(null);
             }
             unset($this->parties[$identifier]);
+            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyDisbandEvent($this->parties[$identifier]));
         }
     }
 

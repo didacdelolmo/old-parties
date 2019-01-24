@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Parties\session;
 
 
+use Parties\event\session\SessionCloseEvent;
+use Parties\event\session\SessionOpenEvent;
 use Parties\Parties;
 use pocketmine\Player;
 
@@ -52,7 +54,9 @@ class SessionManager {
      */
     public function openSession(Player $player): void {
         if(!isset($this->sessions[$username = $player->getName()])) {
-            $this->sessions[$username] = new Session($this, $player);
+            $session = new Session($this, $player);
+            $this->sessions[$username] = $session;
+            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionOpenEvent($session));
         }
     }
 
@@ -60,9 +64,10 @@ class SessionManager {
      * @param Player $player
      */
     public function closeSession(Player $player): void {
-        $session = $this->sessions[$player->getName()];
-        if(isset($session)) {
+        if(isset($this->sessions[$username = $player->getName()])) {
+            $session = $this->sessions[$username];
             $session->clearInvitations();
+            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionOpenEvent($session));
             unset($session);
         }
     }
