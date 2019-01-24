@@ -1,6 +1,10 @@
 # Parties
 Parties plugin for PocketMine-MP
 
+## Available commands
+
+![Commands](https://i.imgur.com/P4FrVX1.png)
+
 ## Using Parties API
 
 ### Getting the instance of the plugin
