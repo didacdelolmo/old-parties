@@ -9,6 +9,6 @@
 ## Their descriptions mean what they will do if they're set to true.
 
 # All the members of the party will be teleported to their leader if he moves to another world.
-teleport_members_to_leader: true
+teleport_members_to_leader: false
 # The members of the party will be able to hit each other
-friendly_fire: false
+friendly_fire: true
