@@ -1,0 +1,14 @@
+#  _____           _   _
+# |  __ \         | | (_)
+# | |__) |_ _ _ __| |_ _  ___  ___
+# |  ___/ _` | '__| __| |/ _ \/ __|
+# | |  | (_| | |  | |_| |  __/\__ \
+# |_|   \__,_|_|   \__|_|\___||___/
+
+## Set this options to true/false to enable/disable them.
+## Their descriptions mean what they will do if they're set to true.
+
+# All the members of the party will be teleported to their leader if he moves to another world.
+teleport_members_to_leader: true
+# The members of the party will be able to hit each other
+friendly_fire: false

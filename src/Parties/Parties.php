@@ -27,14 +27,22 @@ class Parties extends PluginBase {
 
     public function onLoad() {
         self::$instance = $this;
+        if(!is_dir($folder = $this->getDataFolder())) {
+            mkdir($folder);
+        }
+        $this->saveDefaultConfig();
     }
 
     public function onEnable() {
         $this->commandMap = new PartyCommandMap($this);
         $this->partyManager = new PartyManager($this);
         $this->sessionManager = new SessionManager($this);
+        $this->getServer()->getPluginManager()->registerEvents(new PartiesListener($this), $this);
+        if(!$this->getServer()->isLevelLoaded("hub")) {
+            $this->getServer()->loadLevel("hub");
+        }
         $this->getLogger()->info(TextFormat::GOLD . "Parties has been enabled!");
-        $this->getLogger()->info(TextFormat::GOLD . "Remember to check out for new versions at https://github.com/Diduhless/Parties/releases");
+        $this->getLogger()->info(TextFormat::BOLD . TextFormat::DARK_GRAY . "» " . TextFormat::RESET . TextFormat::GOLD . "Remember to check out for new versions at https://github.com/Diduhless/Parties/releases");
     }
     
     public function onDisable() {
