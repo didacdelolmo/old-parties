@@ -61,7 +61,7 @@ class PartyManager {
             unset($this->parties[$identifier]);
             $this->parties[$username] = $party;
         }
-        return $cancelled;
+        return !$cancelled;
     }
 
     /**
@@ -81,7 +81,7 @@ class PartyManager {
             $party->addMember($session);
             $this->parties[$identifier] = $party;
         }
-        return $cancelled;
+        return !$cancelled;
     }
 
     /**
@@ -102,7 +102,7 @@ class PartyManager {
             }
             unset($this->parties[$identifier]);
         }
-        return $cancelled;
+        return !$cancelled;
     }
 
 }

@@ -28,7 +28,7 @@ class CreateCommand extends PartyCommand {
             $session->sendAlreadyPartyMessage();
             return;
         }
-        if(!$session->getManager()->getPlugin()->getPartyManager()->createParty($session)) {
+        if($session->getManager()->getPlugin()->getPartyManager()->createParty($session)) {
             $session->sendMessage(TextFormat::GREEN . "You have created a party!");
         }
     }

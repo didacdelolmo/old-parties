@@ -51,23 +51,27 @@ class SessionManager {
 
     /**
      * @param Player $player
+     * @throws \ReflectionException
      */
     public function openSession(Player $player): void {
         if(!isset($this->sessions[$username = $player->getName()])) {
             $session = new Session($this, $player);
             $this->sessions[$username] = $session;
-            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionOpenEvent($session));
+            $event = new SessionOpenEvent($session);
+            $event->call();
         }
     }
 
     /**
      * @param Player $player
+     * @throws \ReflectionException
      */
     public function closeSession(Player $player): void {
         if(isset($this->sessions[$username = $player->getName()])) {
             $session = $this->sessions[$username];
             $session->clearInvitations();
-            $this->plugin->getServer()->getPluginManager()->callEvent(new SessionCloseEvent($session));
+            $event = new SessionCloseEvent($session);
+            $event->call();
             unset($session);
         }
     }
