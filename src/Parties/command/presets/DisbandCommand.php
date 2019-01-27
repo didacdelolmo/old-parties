@@ -21,6 +21,7 @@ class DisbandCommand extends PartyCommand {
     /**
      * @param Session $session
      * @param array $args
+     * @throws \ReflectionException
      */
     public function onCommand(Session $session, array $args): void {
         if(!$session->hasParty()) {
@@ -32,8 +33,9 @@ class DisbandCommand extends PartyCommand {
             $session->sendLeaderMessage();
             return;
         }
-        $party->sendMessage(TextFormat::AQUA . "The party has been disbanded!");
-        $session->getManager()->getPlugin()->getPartyManager()->deleteParty($session);
+        if(!$session->getManager()->getPlugin()->getPartyManager()->deleteParty($session)) {
+            $party->sendMessage(TextFormat::AQUA . "The party has been disbanded!");
+        }
     }
 
 }

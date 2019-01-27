@@ -7,8 +7,9 @@ namespace Parties\event\party;
 
 use Parties\event\PartiesEvent;
 use Parties\party\Party;
+use pocketmine\event\Cancellable;
 
-abstract class PartyEvent extends PartiesEvent {
+abstract class PartyEvent extends PartiesEvent implements Cancellable {
 
     /** @var Party */
     private $party;

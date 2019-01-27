@@ -63,10 +63,8 @@ class PartiesListener implements Listener {
         }
         /** @var Player $damager */
         $damagerSession = $this->plugin->getSessionManager()->getSession($damager);
-        if(!$damagerSession->hasParty()) {
-            return;
-        }
-        if($entitySession->getParty()->getIdentifier() !== $damagerSession->getParty()->getIdentifier()) {
+        if(!$damagerSession->hasParty() or
+            $entitySession->getParty()->getIdentifier() !== $damagerSession->getParty()->getIdentifier()) {
             return;
         }
         $event->setCancelled();

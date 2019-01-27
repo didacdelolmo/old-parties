@@ -42,41 +42,67 @@ class PartyManager {
     }
 
     /**
+     * Use this function to transfer the party leader to a different member
+     *
      * @param Session $session
+     * @return bool
+     * @throws \ReflectionException
      */
-    public function renameParty(Session $session): void {
-        if(isset($this->parties[$identifier = $session->getParty()->getIdentifier()])) {
-            $party = $this->parties[$identifier];
+    public function renameParty(Session $session): bool {
+        if(!isset($this->parties[$identifier = $session->getParty()->getIdentifier()])) {
+            return false;
+        }
+        $event = new PartyPromoteEvent($party = $this->parties[$identifier]);
+        $event->call();
+        $cancelled = $event->isCancelled();
+        if(!$cancelled) {
             $party->setIdentifier($username = $session->getUsername());
+            $party->setLeader($session);
             unset($this->parties[$identifier]);
             $this->parties[$username] = $party;
-            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyPromoteEvent($party));
         }
+        return $cancelled;
     }
 
     /**
      * @param Session $session
+     * @return bool
+     * @throws \ReflectionException
      */
-    public function createParty(Session $session): void {
-        if(!isset($this->parties[$identifier = $session->getUsername()])) {
-            $party = new Party($this, $identifier, $session);
-            $session->clearInvitations();
-            $this->parties[$identifier] = $party;
-            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyCreateEvent($party));
-        }
-    }
-
-    /**
-     * @param Session $session
-     */
-    public function deleteParty(Session $session): void {
+    public function createParty(Session $session): bool {
         if(isset($this->parties[$identifier = $session->getUsername()])) {
+            return false;
+        }
+        $event = new PartyCreateEvent($party = new Party($this, $identifier, $session));
+        $event->call();
+        $cancelled = $event->isCancelled();
+        if(!$cancelled) {
+            $session->clearInvitations();
+            $party->addMember($session);
+            $this->parties[$identifier] = $party;
+        }
+        return $cancelled;
+    }
+
+    /**
+     * @param Session $session
+     * @return bool
+     * @throws \ReflectionException
+     */
+    public function deleteParty(Session $session): bool {
+        if(!isset($this->parties[$identifier = $session->getUsername()])) {
+            return false;
+        }
+        $event = new PartyDisbandEvent($this->parties[$identifier]);
+        $event->call();
+        $cancelled = $event->isCancelled();
+        if(!$cancelled) {
             foreach($this->parties[$identifier]->getMembers() as $member) {
                 $member->setParty(null);
             }
-            $this->getPlugin()->getServer()->getPluginManager()->callEvent(new PartyDisbandEvent($this->parties[$identifier]));
             unset($this->parties[$identifier]);
         }
+        return $cancelled;
     }
 
 }

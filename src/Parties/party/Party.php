@@ -34,7 +34,6 @@ class Party {
         $this->manager = $manager;
         $this->identifier = $identifier;
         $this->leader = $leader;
-        $this->addMember($leader);
     }
 
     /**

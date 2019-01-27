@@ -21,14 +21,16 @@ class CreateCommand extends PartyCommand {
     /**
      * @param Session $session
      * @param array $args
+     * @throws \ReflectionException
      */
     public function onCommand(Session $session, array $args): void {
         if($session->hasParty()) {
             $session->sendAlreadyPartyMessage();
             return;
         }
-        $session->getManager()->getPlugin()->getPartyManager()->createParty($session);
-        $session->sendMessage(TextFormat::GREEN . "You have created a party!");
+        if(!$session->getManager()->getPlugin()->getPartyManager()->createParty($session)) {
+            $session->sendMessage(TextFormat::GREEN . "You have created a party!");
+        }
     }
 
 }

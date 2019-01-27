@@ -21,6 +21,7 @@ class PromoteCommand extends PartyCommand {
     /**
      * @param Session $session
      * @param array $args
+     * @throws \ReflectionException
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
@@ -51,10 +52,10 @@ class PromoteCommand extends PartyCommand {
             return;
         }
         $username = $playerSession->getUsername();
-        $party->setLeader($playerSession);
-        $party->getManager()->renameParty($playerSession);
-        $session->sendMessage(TextFormat::AQUA . "You have promoted $username to party leader!");
-        $party->sendMessage(TextFormat::GREEN . "$username is now the party leader!");
+        if(!$party->getManager()->renameParty($playerSession)) {
+            $session->sendMessage(TextFormat::AQUA . "You have promoted $username to party leader!");
+            $party->sendMessage(TextFormat::GREEN . "$username is now the party leader!");
+        }
     }
 
 }
