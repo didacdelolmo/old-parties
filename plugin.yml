@@ -1,6 +1,7 @@
-main: Parties\Parties
+main: Diduhless\Parties\Parties
 name: Parties
 author: Didah
+description: Parties plugin for PocketMine-MP
 website: twitter.com/Diduhless
 version: "1.0.1"
 api: [3.0.0]
