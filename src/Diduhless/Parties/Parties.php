@@ -42,7 +42,7 @@ class Parties extends PluginBase {
             $this->getServer()->loadLevel("hub");
         }
         $this->getLogger()->info(TextFormat::GOLD . "Parties has been enabled!");
-        $this->getLogger()->info(TextFormat::BOLD . TextFormat::DARK_GRAY . "» " . TextFormat::RESET . TextFormat::GOLD . "Remember to check out for new versions at https://github.com/Diduhless\Parties/Parties/releases");
+        $this->getLogger()->info(TextFormat::BOLD . TextFormat::DARK_GRAY . "» " . TextFormat::RESET . TextFormat::GOLD . "Remember to check out for new versions at https://github.com/Diduhless/Parties");
     }
     
     public function onDisable() {
