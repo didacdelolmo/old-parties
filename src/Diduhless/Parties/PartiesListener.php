@@ -58,7 +58,7 @@ class PartiesListener implements Listener {
             return;
         }
         $cause = $entity->getLastDamageCause();
-        if(!$cause instanceof EntityDamageByEntityEvent or !($damager = $cause->getDamager()) instanceof Player) {
+        if(!$cause instanceof EntityDamageByEntityEvent or !(($damager = $cause->getDamager()) instanceof Player)) {
             return;
         }
         /** @var Player $damager */
