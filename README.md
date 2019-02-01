@@ -55,4 +55,4 @@ foreach($party->getMembers() as $member) {
 
 
 
-You can see the full API in the [Session](https://github.com/Diduhless/Parties/blob/master/src/Parties/session/Session.php) and the [Party](https://github.com/Diduhless/Parties/blob/master/src/Parties/party/Party.php) classes.
+You can see the full API in the [Session](https://github.com/Diduhless/Parties/blob/master/src/Diduhless/Parties/session/Session.php) and the [Party](https://github.com/Diduhless/Parties/blob/master/src/Diduhless/Parties/party/Party.php) class.
