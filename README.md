@@ -25,7 +25,7 @@ public function onCreate(PartyCreateEvent $event) {
 }
 ```
 
-You can see the full event list [here](https://github.com/Diduhless/Parties/tree/master/src/Parties/event)
+You can see the full event list [here](https://github.com/Diduhless/Parties/tree/master/src/Diduhless/Parties/event)
 
 ### Getting the session of a player
 
