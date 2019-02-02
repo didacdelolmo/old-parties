@@ -9,6 +9,8 @@ use Diduhless\Parties\session\Session;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityLevelChangeEvent;
+use pocketmine\event\entity\EntityTeleportEvent;
+use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\Player;
 
@@ -30,17 +32,42 @@ class PartiesListener implements Listener {
      */
     public function onLevelChange(EntityLevelChangeEvent $event): void {
         $player = $event->getEntity();
-        if(!$this->plugin->getConfig()->get("teleport_members_to_leader") or !$player instanceof Player) {
+        if($player instanceof Player) {
+            $this->onLeaderTeleport($this->plugin->getSessionManager()->getSession($player), $event);
+        }
+    }
+
+    /**
+     * @param EntityTeleportEvent $event
+     */
+    public function onTeleport(EntityTeleportEvent $event): void {
+        $player = $event->getEntity();
+        if($player instanceof Player) {
+            $this->onLeaderTeleport($this->plugin->getSessionManager()->getSession($player), $event);
+        }
+    }
+
+    /**
+     * @param Session $session
+     * @param Event $event
+     */
+    public function onLeaderTeleport(Session $session, Event $event): void {
+        if(!$this->plugin->getConfig()->get("teleport_members_to_leader")) {
             return;
         }
-        $session = $this->plugin->getSessionManager()->getSession($player);
         if(!$session->hasParty() or !$session->isLeader()) {
             return;
         }
         /** @var Session $member */
         foreach($session->getParty()->getMembers() as $member) {
             if(!$member->isLeader()) {
-                $member->getOwner()->teleport($session->getOwner()->asVector3());
+                $owner = $member->getOwner();
+                if($event instanceof EntityLevelChangeEvent) {
+                    $owner->teleport($event->getTarget()->getSafeSpawn());
+                }
+                if($event instanceof EntityTeleportEvent) {
+                    $owner->teleport($event->getTo());
+                }
             }
         }
     }

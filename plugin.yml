@@ -3,5 +3,5 @@ name: Parties
 author: Didah
 description: Parties plugin for PocketMine-MP
 website: twitter.com/Diduhless
-version: "1.0.1"
+version: "1.0.2"
 api: [3.0.0]
