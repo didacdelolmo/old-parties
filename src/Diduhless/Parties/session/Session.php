@@ -178,4 +178,8 @@ class Session {
         $this->sendMessage(TextFormat::RED . "This player is not in your party!");
     }
 
+    public function sendFullPartyMessage(): void {
+        $this->sendMessage(TextFormat::RED . "The party you're attempting to join is full!");
+    }
+
 }

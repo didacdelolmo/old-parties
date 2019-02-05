@@ -35,11 +35,11 @@ class LockCommand extends PartyCommand {
         $username = $session->getUsername();
         if($party->isLocked()) {
             $party->setLocked(false);
-            $party->sendMessage(TextFormat::GREEN . $username . " has unlocked the party!");
+            $party->sendMessage(TextFormat::WHITE . $username . TextFormat::GREEN . " has unlocked the party!");
             return;
         }
         $party->setLocked();
-        $party->sendMessage(TextFormat::GREEN . $username . " has locked the party!");
+        $party->sendMessage(TextFormat::WHITE . $username . TextFormat::GREEN . " has locked the party!");
     }
 
 }

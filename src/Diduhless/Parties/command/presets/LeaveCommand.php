@@ -33,7 +33,9 @@ class LeaveCommand extends PartyCommand {
             return;
         }
         $party->removeMember($session);
-        $party->sendMessage(TextFormat::GREEN . $session->getUsername() . " has left the party");
+        $party->sendMessage(
+            TextFormat::WHITE . $session->getUsername() . TextFormat::GREEN . " has left the party"
+        );
         $session->sendMessage(TextFormat::AQUA . "You have left the party!");
     }
 

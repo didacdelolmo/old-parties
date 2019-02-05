@@ -21,6 +21,9 @@ class Party {
     /** @var Session[] */
     private $members = [];
 
+    /** @var int|null */
+    private $slots = null;
+
     /** @var bool */
     private $locked = true;
 
@@ -65,10 +68,24 @@ class Party {
     }
 
     /**
+     * @return int|null
+     */
+    public function getSlots(): ?int {
+        return $this->slots;
+    }
+
+    /**
      * @return bool
      */
     public function getLocked(): bool {
         return $this->locked;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFull(): bool {
+        return $this->slots != null and count($this->members) >= $this->slots;
     }
 
     /**
@@ -97,6 +114,13 @@ class Party {
      */
     public function setMembers(array $members): void {
         $this->members = $members;
+    }
+
+    /**
+     * @param int|null $slots
+     */
+    public function setSlots(?int $slots): void {
+        $this->slots = $slots;
     }
 
     /**

@@ -31,7 +31,10 @@ class ChatCommand extends PartyCommand {
             $session->sendMissingPartyMessage();
             return;
         }
-        $session->getParty()->sendMessage(TextFormat::LIGHT_PURPLE . "@Party " . TextFormat::GREEN . $session->getUsername() . ": " . implode(" ", $args));
+        $session->getParty()->sendMessage(
+            TextFormat::LIGHT_PURPLE . "@Party " . TextFormat::GREEN .
+            $session->getUsername() . ": " . implode(" ", $args)
+        );
     }
 
 }

@@ -46,9 +46,18 @@ class JoinCommand extends PartyCommand {
             $session->sendAlreadyPartyMessage();
             return;
         }
+        if($party->isFull()) {
+            $session->sendFullPartyMessage();
+            return;
+        }
         $party->addMember($session);
-        $party->sendMessage(TextFormat::GREEN . $session->getUsername() . " has joined the party!");
-        $session->sendMessage(TextFormat::GREEN . "You have joined {$playerSession->getUsername()}'s party!");
+        $party->sendMessage(
+            TextFormat::WHITE . $session->getUsername() . TextFormat::GREEN . " has joined the party!"
+        );
+        $session->sendMessage(
+            TextFormat::GREEN . "You have joined" . TextFormat::WHITE
+            . $playerSession->getUsername() . TextFormat::GREEN . "'s party!"
+        );
     }
 
 }

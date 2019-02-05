@@ -53,8 +53,11 @@ class PromoteCommand extends PartyCommand {
         }
         $username = $playerSession->getUsername();
         if($party->getManager()->renameParty($playerSession)) {
-            $session->sendMessage(TextFormat::AQUA . "You have promoted $username to party leader!");
-            $party->sendMessage(TextFormat::GREEN . "$username is now the party leader!");
+            $session->sendMessage(
+                TextFormat::AQUA . "You have promoted" .
+                TextFormat::WHITE .  $username . "to party leader!"
+            );
+            $party->sendMessage(TextFormat::WHITE . $username . TextFormat::GREEN . "is now the party leader!");
         }
     }
 

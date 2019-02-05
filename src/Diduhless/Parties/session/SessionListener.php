@@ -24,6 +24,7 @@ class SessionListener implements Listener {
 
     /**
      * @param PlayerLoginEvent $event
+     * @throws \ReflectionException
      */
     public function onLogin(PlayerLoginEvent $event): void {
         $this->manager->openSession($event->getPlayer());
@@ -31,6 +32,7 @@ class SessionListener implements Listener {
 
     /**
      * @param PlayerQuitEvent $event
+     * @throws \ReflectionException
      */
     public function onQuit(PlayerQuitEvent $event): void {
         $this->manager->closeSession($event->getPlayer());

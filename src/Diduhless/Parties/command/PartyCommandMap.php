@@ -16,6 +16,7 @@ use Diduhless\Parties\command\presets\LeaveCommand;
 use Diduhless\Parties\command\presets\ListCommand;
 use Diduhless\Parties\command\presets\LockCommand;
 use Diduhless\Parties\command\presets\PromoteCommand;
+use Diduhless\Parties\command\presets\SlotsCommand;
 use Diduhless\Parties\Parties;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -47,6 +48,7 @@ class PartyCommandMap extends Command {
         $this->registerCommand(new ListCommand());
         $this->registerCommand(new LockCommand());
         $this->registerCommand(new PromoteCommand());
+        $this->registerCommand(new SlotsCommand());
         parent::__construct("party", "See party commands", "Usage: /party", ["p"]);
         $plugin->getServer()->getCommandMap()->register("party", $this);
     }

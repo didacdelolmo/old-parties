@@ -40,12 +40,15 @@ class AcceptCommand extends PartyCommand {
             return;
         }
         $playerSession = $session->getManager()->getSession($player);
-        // If a party has been disbanded it will show this message
         if(!$session->hasInvitationFrom($playerSession)) {
             $session->sendMessage(TextFormat::RED . "You don't have an invitation from this player!");
             return;
         }
         $party = $playerSession->getParty();
+        if($party->isFull()) {
+            $session->sendFullPartyMessage();
+            return;
+        }
         $party->addMember($session);
         $party->sendMessage(TextFormat::GREEN . $session->getUsername() . " has joined the party!");
         $session->sendMessage(TextFormat::AQUA . "You have joined " . TextFormat::WHITE . $playerSession->getUsername() . TextFormat::AQUA . "'s party!");

@@ -51,7 +51,9 @@ class KickCommand extends PartyCommand {
             return;
         }
         $username = $playerSession->getUsername();
-        $party->sendMessage(TextFormat::GREEN . $username . " has been kicked from the party!");
+        $party->sendMessage(
+            TextFormat::WHITE . $username . TextFormat::GREEN . " has been kicked from the party!"
+        );
         $party->removeMember($playerSession);
     }
 

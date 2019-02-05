@@ -49,10 +49,19 @@ class InviteCommand extends PartyCommand {
             $session->sendLeaderMessage();
             return;
         }
+        if($session->getParty()->isFull()) {
+            $session->sendFullPartyMessage();
+            return;
+        }
         $username = $session->getUsername();
         $playerSession->addInvitationFrom($session);
-        $playerSession->sendMessage(TextFormat::AQUA . $username . " has invited you to a party! Use " . TextFormat::WHITE .  "/party accept $username" . TextFormat::AQUA . " to accept the invitation");
-        $session->sendMessage(TextFormat::GREEN . "You have invited {$playerSession->getUsername()} to the party!");
+        $playerSession->sendMessage(
+            TextFormat::WHITE . $username . TextFormat::AQUA . " has invited you to his party! Use "
+            . TextFormat::WHITE .  "/party accept $username" . TextFormat::AQUA . " to accept the invitation"
+        );
+        $session->sendMessage(TextFormat::GREEN . "You have invited " . TextFormat::WHITE
+            . $playerSession->getUsername() . TextFormat::GREEN . " to the party!"
+        );
     }
 
 }

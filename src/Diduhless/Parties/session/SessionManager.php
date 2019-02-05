@@ -43,10 +43,10 @@ class SessionManager {
 
     /**
      * @param Player $player
-     * @return Session
+     * @return Session|null
      */
-    public function getSession(Player $player): Session {
-        return $this->sessions[$player->getName()];
+    public function getSession(Player $player): ?Session {
+        return $this->sessions[$player->getName()] ?? null;
     }
 
     /**
