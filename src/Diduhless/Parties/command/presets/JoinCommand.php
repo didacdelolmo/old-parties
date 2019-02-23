@@ -24,7 +24,7 @@ class JoinCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage("Usage: " .$this->getUsageMessageId());
+            $session->sendMessage("Usage: " . $this->getUsageMessageId());
             return;
         }
         $player = $session->getManager()->getPlugin()->getServer()->getPlayer($args[0]);

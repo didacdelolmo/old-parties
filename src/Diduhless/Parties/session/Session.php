@@ -96,7 +96,7 @@ class Session {
      * @return bool
      */
     public function isLeader(): bool {
-        return $this->party->getLeader()->getUsername() == $this->getUsername();
+        return $this->party->getLeader()->getUsername() === $this->getUsername();
     }
 
     /**
@@ -138,6 +138,9 @@ class Session {
         if(in_array($session, $this->invitations)) {
             unset($this->invitations[array_search($session, $this->invitations)]);
         }
+        if($this->hasLastInvitation() and $this->lastInvitation->getUsername() === $session->getUsername()) {
+            $this->setLastInvitation(null);
+        }
     }
 
     public function clearInvitations(): void {
@@ -145,7 +148,7 @@ class Session {
             if($session->hasInvitationFrom($this)) {
                 $session->removeInvitationFrom($this);
             }
-            if($session->hasLastInvitation() and $session->getLastInvitation()->getUsername() == $this->getUsername()) {
+            if($session->hasLastInvitation() and $session->getLastInvitation()->getUsername() === $this->getUsername()) {
                 $session->setLastInvitation(null);
             }
         }

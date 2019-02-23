@@ -42,8 +42,6 @@ class PartyManager {
     }
 
     /**
-     * Use this function to transfer the party leader to a different member
-     *
      * @param Session $session
      * @return bool
      * @throws \ReflectionException
@@ -100,6 +98,7 @@ class PartyManager {
             foreach($this->parties[$identifier]->getMembers() as $member) {
                 $member->setParty(null);
             }
+            $session->clearInvitations();
             unset($this->parties[$identifier]);
         }
         return !$cancelled;
