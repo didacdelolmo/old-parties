@@ -54,6 +54,7 @@ class PartyManager {
         $event->call();
         $cancelled = $event->isCancelled();
         if(!$cancelled) {
+            $session->clearInvitations();
             $party->setIdentifier($username = $session->getUsername());
             $party->setLeader($session);
             unset($this->parties[$identifier]);

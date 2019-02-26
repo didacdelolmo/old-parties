@@ -42,8 +42,8 @@ class PartiesListener implements Listener {
      */
     public function onTeleport(EntityTeleportEvent $event): void {
         $player = $event->getEntity();
-        if($player instanceof Player) {
-            $this->onLeaderTeleport($this->plugin->getSessionManager()->getSession($player), $event);
+        if($player instanceof Player and ($session = $this->plugin->getSessionManager()->getSession($player)) != null) {
+            $this->onLeaderTeleport($session, $event);
         }
     }
 
