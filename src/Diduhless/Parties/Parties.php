@@ -7,6 +7,7 @@ namespace Diduhless\Parties;
 
 use Diduhless\Parties\command\PartyCommandMap;
 use Diduhless\Parties\party\PartyManager;
+use Diduhless\Parties\session\SessionListener;
 use Diduhless\Parties\session\SessionManager;
 use pocketmine\plugin\PluginBase;
 
@@ -36,8 +37,11 @@ class Parties extends PluginBase {
         $this->commandMap = new PartyCommandMap($this);
         $this->partyManager = new PartyManager($this);
         $this->sessionManager = new SessionManager($this);
-        $this->getServer()->getPluginManager()->registerEvents(new PartiesListener($this), $this);
-        $this->getLogger()->info("Remember to check out for new versions at https://github.com/Diduhless/Parties");
+
+        $pluginManager = $this->getServer()->getPluginManager();
+        $pluginManager->registerEvents(new SessionListener($this->sessionManager), $this);
+        $pluginManager->registerEvents(new PartiesListener($this), $this);
+        $this->getLogger()->info("Remember to check out for new versions at https://github.com/Diduhless/Parties/releases");
     }
 
     /**

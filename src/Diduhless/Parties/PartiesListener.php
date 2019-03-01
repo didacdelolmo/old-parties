@@ -12,6 +12,7 @@ use pocketmine\event\entity\EntityLevelChangeEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 
 class PartiesListener implements Listener {
@@ -25,6 +26,16 @@ class PartiesListener implements Listener {
      */
     public function __construct(Parties $plugin) {
         $this->plugin = $plugin;
+    }
+
+    /**
+     * @param PlayerQuitEvent $event
+     */
+    public function onQuit(PlayerQuitEvent $event): void {
+        $session = $this->plugin->getSessionManager()->getSession($event->getPlayer());
+        if($session->hasParty()) {
+            $session->getParty()->removeMember($session);
+        }
     }
 
     /**

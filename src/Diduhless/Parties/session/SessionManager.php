@@ -24,7 +24,6 @@ class SessionManager {
      */
     public function __construct(Parties $plugin) {
         $this->plugin = $plugin;
-        $plugin->getServer()->getPluginManager()->registerEvents(new SessionListener($this), $plugin);
     }
 
     /**
@@ -57,8 +56,7 @@ class SessionManager {
         if(!isset($this->sessions[$username = $player->getName()])) {
             $session = new Session($this, $player);
             $this->sessions[$username] = $session;
-            $event = new SessionOpenEvent($session);
-            $event->call();
+            (new SessionOpenEvent($session))->call();
         }
     }
 
@@ -70,8 +68,7 @@ class SessionManager {
         if(isset($this->sessions[$username = $player->getName()])) {
             $session = $this->sessions[$username];
             $session->clearInvitations();
-            $event = new SessionCloseEvent($session);
-            $event->call();
+            (new SessionCloseEvent($session))->call();
             unset($session);
         }
     }

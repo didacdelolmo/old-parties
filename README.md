@@ -30,7 +30,7 @@ You can see the full event list [here](https://github.com/Diduhless/Parties/tree
 ### Getting the session of a player
 
 ```php
-$session = $instance-getSessionManager()->getSession(Player);
+$session = $instance->getSessionManager()->getSession(Player);
 ```
 
 ### Getting the player instance of a session
