@@ -24,7 +24,7 @@ class InviteCommand extends PartyCommand {
      */
     public function onCommand(Session $session, array $args): void {
         if(!isset($args[0])) {
-            $session->sendMessage("Usage: " .$this->getUsageMessageId());
+            $session->sendMessage("Usage: " . $this->getUsageMessageId());
             return;
         }
         $plugin = $session->getManager()->getPlugin();
@@ -43,7 +43,8 @@ class InviteCommand extends PartyCommand {
             return;
         }
         if(!$session->hasParty()) {
-            $plugin->getServer()->dispatchCommand($session->getOwner(), "party create");
+            $session->sendMessage(TextFormat::RED . "You have to create a party to invite players!");
+            return;
         }
         if(!$session->isLeader()) {
             $session->sendLeaderMessage();
